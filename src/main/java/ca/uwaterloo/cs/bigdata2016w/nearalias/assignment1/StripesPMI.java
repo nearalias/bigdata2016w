@@ -60,6 +60,7 @@ public class StripesPMI extends Configured implements Tool {
       }
       String[] words = new String[set.size()];
       words = set.toArray(words);
+      if (words.length == 0) return;
 
       for (int i = 0; i < words.length; i++) {
         WORD.set(words[i]);

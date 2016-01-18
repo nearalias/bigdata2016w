@@ -38,34 +38,29 @@ StripesPMI: Second Job Finished in 19.732 seconds
 
 ## Question 5
 
-(maine, anjou) 3.6331422
+(maine, anjou) 3.5971177
 
 I think these 2 words had the highest PMI because perhaps neither of them appears that frequently, and so the denominator in PMI calculation is lower in comparison with other pairs. At the same time, since these 2 words don't appear very often, it makes their appearances together that much more significant.
 
 ## Question 6
 
-(tears, shed) 2.1117902
+(tears, shed) 2.0757654
 
-(tears, salt) 2.052812
+(tears, salt) 2.0167875
 
-(tears, eyes) 1.165167
+(tears, eyes) 1.1291423
 
-(death, father's) 1.120252
+(death, father's) 1.0842273
 
-(death, die)  0.7541594
+(death, die)  0.7181347
 
-(death, life) 0.73813456
+(death, life) 0.7021099
 
 ## Question 7
 
 (waterloo, kitchener) 2.6149974
-
 (waterloo, napoleon)  1.9084398
-
 (waterloo, napoleonic)  1.786619
-
 (toronto, marlboros)  2.3539965
-
 (toronto, spadina)  2.3126037
-
 (toronto, leafs)  2.3108907
