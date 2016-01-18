@@ -1,8 +1,6 @@
 package ca.uwaterloo.cs.bigdata2016w.nearalias.assignment1;
 
 import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -15,6 +13,7 @@ import java.util.HashSet;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.FloatWritable;
@@ -139,11 +138,12 @@ public class StripesPMI extends Configured implements Tool {
     @Override
     public void setup(Context context) {
       try {
-        File folder = new File("ggideservechallenjourgg");
-        for (File file : folder.listFiles()) {
+        FileSystem fs = FileSystem.get(context.getConfiguration());
+        FileStatus[] status = fs.listStatus(new Path("ggideservechallenjourgg"));
+        for (int i = 0; i < status.length; i++) {
+          Path file = status[i].getPath();
           if (!(file.getName().startsWith("part-r"))) continue;
-          FileInputStream fis = new FileInputStream(file);
-          BufferedReader in = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+          BufferedReader in = new BufferedReader(new InputStreamReader(fs.open(file), "UTF-8"));
           String line = null;
           while ((line = in.readLine()) != null) {
             String[] kv = line.split("\\s+");
@@ -153,6 +153,7 @@ public class StripesPMI extends Configured implements Tool {
         }
       } catch (Exception e) {
       }
+
       TOTAL_NUM_LINES = dataMap.get("*");
     }
 

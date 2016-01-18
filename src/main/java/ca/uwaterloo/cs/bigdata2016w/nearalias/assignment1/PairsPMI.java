@@ -140,17 +140,12 @@ public class PairsPMI extends Configured implements Tool {
     @Override
     public void setup(Context context) {
       try {
-LOG.info("-------------- entering trycatch --------------");
         FileSystem fs = FileSystem.get(context.getConfiguration());
-LOG.info("-------------- creatd filesystem --------------");
         FileStatus[] status = fs.listStatus(new Path("ideservechallenjourgg"));
-LOG.info("-------------- got file statuses --------------");
         for (int i = 0; i < status.length; i++) {
           Path file = status[i].getPath();
-LOG.info("-------------- opening: "+file.getName()+" --------------");
           if (!(file.getName().startsWith("part-r"))) continue;
           BufferedReader in = new BufferedReader(new InputStreamReader(fs.open(file), "UTF-8"));
-LOG.info("-------------- buffered reader is good, file opened --------------");
           String line = null;
           while ((line = in.readLine()) != null) {
             String[] kv = line.split("\\s+");
@@ -158,13 +153,9 @@ LOG.info("-------------- buffered reader is good, file opened --------------");
           }
           in.close();
         }
-LOG.info("-------------- size:  "+ dataMap.size()+"-----------");
-LOG.info("-------------- exiting trycatch --------------");
       } catch (Exception e) {
-LOG.info("-------------- errored out --------------");
       }
 
-LOG.info("-------------- finish size:  "+ dataMap.size()+"-----------");
       TOTAL_NUM_LINES = dataMap.get("*");
     }
 

@@ -12,21 +12,19 @@ Similar to above, I also used 2 MapReduce jobs here. The first job is exactly th
 
 Running on linux.student.cs.uwaterloo.ca.
 
-For Pairs implementation:
-First job took around 8.802 seconds, second job took around 47.328 seconds.
-
-For Stripes implementation:
-First job took around 8.627 seconds, second job took around 21.001 seconds.
+PairsPMI: First Job Finished in 6.105 seconds
+PairsPMI: Second Job Finished in 46.75 seconds
+StripesPMI: First Job Finished in 6.117 seconds
+StripesPMI: Second Job Finished in 16.758 seconds
 
 ## Question 3
 
-Running on linux.student.cs.uwaterloo.ca.
+Running on linux.student.cs.uwaterloo.ca, without combiners.
 
-For Pairs implementation:
-First job took around 10.808 seconds, second job took around 52.98 seconds.
-
-For Stripes implementation:
-First job took around 11.868 seconds, second job took around 22.105 seconds.
+PairsPMI: First Job Finished in 9.114 seconds
+PairsPMI: Second Job Finished in 58.791 seconds
+StripesPMI: First Job Finished in 9.088 seconds
+StripesPMI: Second Job Finished in 19.732 seconds
 
 ## Question 4
 
@@ -48,3 +46,11 @@ I think these 2 words had the highest PMI because perhaps neither of them appear
 (death, life) 0.73813456
 
 ## Question 7
+
+(waterloo, kitchener) 2.6149974
+(waterloo, napoleon)  1.9084398
+(waterloo, napoleonic)  1.786619
+
+(toronto, marlboros)  2.3539965
+(toronto, spadina)  2.3126037
+(toronto, leafs)  2.3108907
