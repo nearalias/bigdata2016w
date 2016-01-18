@@ -58,9 +58,14 @@ I think these 2 words had the highest PMI because perhaps neither of them appear
 
 ## Question 7
 
-(waterloo, kitchener) 2.6149974
-(waterloo, napoleon)  1.9084398
-(waterloo, napoleonic)  1.786619
-(toronto, marlboros)  2.3539965
-(toronto, spadina)  2.3126037
-(toronto, leafs)  2.3108907
+(waterloo, kitchener) 2.6149967
+
+(waterloo, napoleon)  1.908439
+
+(waterloo, napoleonic)  1.7866182
+
+(toronto, marlboros)  2.3539958
+
+(toronto, spadina)  2.312603
+
+(toronto, leafs)  2.3108897
