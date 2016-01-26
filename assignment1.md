@@ -69,3 +69,44 @@ I think these 2 words had the highest PMI because perhaps neither of them appear
 (toronto, spadina)  2.312603
 
 (toronto, leafs)  2.3108897
+
+
+Q4p			1.5
+
+Q4s			1.5
+
+Q5p			1.5
+
+Q5s			1.5
+
+Q6.1p		1.5
+
+Q6.1s		1.5
+
+Q6.2p		1.5
+
+Q6.2s		1.5
+
+Q7.1p		1.5
+
+Q7.1s		1.5
+
+Q7.2p		1.5
+
+Q7.2s		1.5
+
+linux p		4
+
+linux s		4
+
+alti p		4
+
+alti s		4
+
+notes		
+
+total		50
+
+p stands for pair, s for stripe. linux p stands for run and compile pair in linux. 
+
+If you have any question regarding to A1, plz come to DC3305 3~5pm on Friday (29th).
