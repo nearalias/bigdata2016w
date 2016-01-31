@@ -13,7 +13,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.MapFile;
 import org.apache.hadoop.io.Text;
@@ -28,25 +27,14 @@ import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.ParserProperties;
 
 public class BooleanRetrievalCompressed extends Configured implements Tool {
-  private MapFile.Reader[] indices;
+  private MapFile.Reader index;
   private FSDataInputStream collection;
   private Stack<Set<Integer>> stack;
 
   private BooleanRetrievalCompressed() {}
 
   private void initialize(String indexPath, String collectionPath, FileSystem fs) throws IOException {
-    FileStatus[] status = fs.listStatus(new Path(indexPath));
-    int parts = 0;
-    for (int i = 0; i < status.length; i++) {
-      Path file = status[i].getPath();
-      if (file.getName().startsWith("part-r")) parts++;
-    }
-    indices = new MapFile.Reader[parts];
-    for (int i = 0; i < indices.length; i++) {
-      String part = i+"";
-      while (part.length() < 5) part = "0"+part;
-      indices[i] = new MapFile.Reader(new Path(indexPath+"/part-r-"+part), fs.getConf());
-    }
+    index = new MapFile.Reader(new Path(indexPath + "/part-r-00000"), fs.getConf());
     collection = fs.open(new Path(collectionPath));
     stack = new Stack<Set<Integer>>();
   }
@@ -113,10 +101,7 @@ public class BooleanRetrievalCompressed extends Configured implements Tool {
     BytesWritable postings = new BytesWritable();
 
     key.set(term);
-    for (int i = 0; i < indices.length; i++) {
-      indices[i].get(key, postings);
-      if (postings != null && postings.getLength() != 0) break;
-    }
+    index.get(key, postings);
 
     ByteArrayInputStream byteArrayIn = new ByteArrayInputStream(postings.copyBytes());
     DataInputStream dataIn = new DataInputStream(byteArrayIn);
