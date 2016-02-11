@@ -271,8 +271,8 @@ public class RunPersonalizedPageRankBasic extends Configured implements Tool {
       for (int i = 0; i < pageRanks.length; i++) {
         pageRanks[i] += (float) Math.log(1.0f - ALPHA);
         if (node.getNodeId() == sourceIds[i]) {
-          float linkFactor = oneMinusA + missingMasses[i] <= 0.0f ? 0.0f : (float) Math.log(missingMasses[i]);
-          float link = sumLogProbs(a, linkFactor);
+          pageRanks[i] = sumLogProbs(pageRanks[i], a);
+          float link = oneMinusA + (missingMasses[i] <= 0.0f ? Float.NEGATIVE_INFINITY : (float) Math.log(missingMasses[i]));
           pageRanks[i] = sumLogProbs(pageRanks[i], link);
         }
       }
