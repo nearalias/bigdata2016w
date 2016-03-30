@@ -8,12 +8,20 @@ import java.io.DataInputStream;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
+import java.util.NavigableMap;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.HConnection;
+import org.apache.hadoop.hbase.client.HConnectionManager;
+import org.apache.hadoop.hbase.client.HTableInterface;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.util.Tool;
@@ -97,9 +105,8 @@ public class BooleanRetrievalHBase extends Configured implements Tool {
 
     Get get = new Get(Bytes.toBytes(term));
     Result result = table.get(get);
-    Map<byte[], byte[]> family = result.getFamilyMap(Bytes.toBytes(BuildInvertedIndexHBase.CF));
-    for (Map.Entry<byte[], byte[]> entry : family.entrySet()) {
-      byte[] docId = entry.getKey();
+    NavigableMap<byte[], byte[]> family = result.getFamilyMap(BuildInvertedIndexHBase.CF);
+    for (byte[] docId : family.keySet()) {
       set.add(Bytes.toInt(docId));
     }
 

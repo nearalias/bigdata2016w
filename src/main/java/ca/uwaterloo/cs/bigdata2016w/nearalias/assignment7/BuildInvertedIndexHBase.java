@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -90,45 +90,6 @@ public class BuildInvertedIndexHBase extends Configured implements Tool {
         put.add(CF, Bytes.toBytes(key.getRightElement()), Bytes.toBytes(val.get()));
       }
       context.write(null, put);
-    }
-  }
-
-  private static class MyReducer extends Reducer<PairOfStringInt, IntWritable, Text, BytesWritable> {
-    private final static Text TERM = new Text();
-    private static String prevTerm = null;
-    private static int prevDocId = 0;
-    private static int df = 0;
-    private static ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
-    private static DataOutputStream dataOut = new DataOutputStream(byteArrayOut);
-
-    @Override
-    public void reduce(PairOfStringInt key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-      Iterator<IntWritable> iter = values.iterator();
-      if (!(key.getLeftElement().equals(prevTerm)) && prevTerm != null) {
-        TERM.set(prevTerm);
-        WritableUtils.writeVInt(dataOut, df); // too lazy to go back and emit (word, *) so just gonna append df to the end pls don't fine me QAQ
-        context.write(TERM, new BytesWritable(byteArrayOut.toByteArray()));
-        byteArrayOut.reset();
-        dataOut.flush();
-        prevDocId = 0;
-        df = 0;
-      }
-      prevTerm = key.getLeftElement();
-      df ++;
-      WritableUtils.writeVInt(dataOut, key.getRightElement() - prevDocId);
-      WritableUtils.writeVInt(dataOut, iter.next().get());
-      prevDocId = key.getRightElement();
-    }
-
-    @Override
-    public void cleanup(Context context) throws IOException, InterruptedException {
-      TERM.set(prevTerm);
-      WritableUtils.writeVInt(dataOut, df);
-      context.write(TERM, new BytesWritable(byteArrayOut.toByteArray()));
-      prevTerm = null;
-      byteArrayOut.reset();
-      dataOut.flush();
-      dataOut.close();
     }
   }
 
